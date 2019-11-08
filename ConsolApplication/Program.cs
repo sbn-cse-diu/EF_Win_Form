@@ -12,8 +12,22 @@ namespace ConsolApplication
     {
         static void Main(string[] args)
         {
-            SchoolDBContext DB = new SchoolDBContext();
-            DisplayStudents(DB.Students.ToList());
+            using (SchoolDBContext DB = new SchoolDBContext())
+            {
+                Console.WriteLine("Insert New Student");
+                Student student = new Student();
+                Console.Write("Name: ");
+                student.Name = Console.ReadLine();
+                Console.Write("Address: ");
+                student.Address = Console.ReadLine();
+                Console.Write("Phone: ");
+                student.Phone = Console.ReadLine();
+
+                DB.Students.Add(student);
+                DB.SaveChanges();
+
+                DisplayStudents(DB.Students.ToList());
+            }
             Console.WriteLine("Done");
             Console.ReadKey();
         }
